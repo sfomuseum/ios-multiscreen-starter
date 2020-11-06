@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,7 @@
 		4A42D3FD2555CF2D00067E57 /* MultiScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D3FC2555CF2D00067E57 /* MultiScreenTests.swift */; };
 		4A42D4082555CF2D00067E57 /* MultiScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D4072555CF2D00067E57 /* MultiScreenUITests.swift */; };
 		4A42D41E2555D03600067E57 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D41D2555D03600067E57 /* FileUtils.swift */; };
+		4A42D4352555DAC800067E57 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A42D4342555DAC800067E57 /* Logging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A42D4352555DAC800067E57 /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +153,9 @@
 			dependencies = (
 			);
 			name = MultiScreen;
+			packageProductDependencies = (
+				4A42D4342555DAC800067E57 /* Logging */,
+			);
 			productName = MultiScreen;
 			productReference = 4A42D3E22555CF2A00067E57 /* MultiScreen.app */;
 			productType = "com.apple.product-type.application";
@@ -222,6 +227,9 @@
 				Base,
 			);
 			mainGroup = 4A42D3D92555CF2A00067E57;
+			packageReferences = (
+				4A42D4332555DAC800067E57 /* XCRemoteSwiftPackageReference "swift-log" */,
+			);
 			productRefGroup = 4A42D3E32555CF2A00067E57 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -448,6 +456,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 68966928SB;
 				INFOPLIST_FILE = MultiScreen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,6 +480,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 68966928SB;
 				INFOPLIST_FILE = MultiScreen/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -607,6 +619,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4A42D4332555DAC800067E57 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4A42D4342555DAC800067E57 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A42D4332555DAC800067E57 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4A42D3DA2555CF2A00067E57 /* Project object */;
 }
