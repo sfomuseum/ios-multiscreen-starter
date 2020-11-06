@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    
     // References to our windows that we're creating
     
     var windowsForScreens = [UIScreen: UIWindow]()
@@ -64,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.logger.logLevel = .warning
         
         // Set up the device's main screen UI
+        
+        // let window = UIWindow()
         
         let requestURLString = "main.html"
         addViewController(to: window!, requestURLString: requestURLString)
