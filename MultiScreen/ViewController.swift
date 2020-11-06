@@ -108,6 +108,11 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         
+        if self.url == nil {
+            print("Missing self.url")
+            return
+        }
+        
         var path = FileUtils.AbsPath(self.url)
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
