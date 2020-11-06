@@ -41,6 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         windowsForScreens[screen] = window
     }
 
+    // Hide the window and remove our reference to it so it will be deallocated
+    
+    private func tearDownWindow(for screen: UIScreen) {
+        guard let window = windowsForScreens[screen] else { return }
+        window.isHidden = true
+        windowsForScreens[screen] = nil
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
