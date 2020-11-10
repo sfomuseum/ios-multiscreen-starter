@@ -17,6 +17,7 @@
 		4A42D4082555CF2D00067E57 /* MultiScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D4072555CF2D00067E57 /* MultiScreenUITests.swift */; };
 		4A42D41E2555D03600067E57 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D41D2555D03600067E57 /* FileUtils.swift */; };
 		4A42D4352555DAC800067E57 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A42D4342555DAC800067E57 /* Logging */; };
+		4AED2826255B218B00823C2A /* www.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4AED2825255B218B00823C2A /* www.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +53,8 @@
 		4A42D4072555CF2D00067E57 /* MultiScreenUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiScreenUITests.swift; sourceTree = "<group>"; };
 		4A42D4092555CF2D00067E57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A42D41D2555D03600067E57 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
-		4A42D4222555D14300067E57 /* www.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = www.bundle; sourceTree = "<group>"; };
 		4A42D4232555D14F00067E57 /* MultiScreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultiScreen.entitlements; sourceTree = "<group>"; };
+		4AED2825255B218B00823C2A /* www.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = www.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +106,8 @@
 		4A42D3E42555CF2A00067E57 /* MultiScreen */ = {
 			isa = PBXGroup;
 			children = (
+				4AED2825255B218B00823C2A /* www.bundle */,
 				4A42D4232555D14F00067E57 /* MultiScreen.entitlements */,
-				4A42D4222555D14300067E57 /* www.bundle */,
 				4A42D3E52555CF2A00067E57 /* AppDelegate.swift */,
 				4A42D3E72555CF2A00067E57 /* SceneDelegate.swift */,
 				4A42D3E92555CF2A00067E57 /* ViewController.swift */,
@@ -249,6 +250,7 @@
 				4A42D3F22555CF2D00067E57 /* LaunchScreen.storyboard in Resources */,
 				4A42D3EF2555CF2D00067E57 /* Assets.xcassets in Resources */,
 				4A42D3ED2555CF2A00067E57 /* Main.storyboard in Resources */,
+				4AED2826255B218B00823C2A /* www.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
