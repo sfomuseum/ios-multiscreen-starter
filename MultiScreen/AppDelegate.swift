@@ -66,6 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // let window = UIWindow()
         
+        print("SCENES", application.connectedScenes)
+        
+        return true
+        
         let requestURLString = "main.html"
         addViewController(to: window!, requestURLString: requestURLString)
         

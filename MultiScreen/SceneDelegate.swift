@@ -11,12 +11,83 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
+    var windowsForScreens = [UIScreen: UIWindow]()
+    
+    private func addViewController(to window: UIWindow, requestURLString: String) {
+        
+        // self.logger.info("add view controller \(requestURLString)")
+        
+        let vc = ViewController.makeFromStoryboard(requestURLString: requestURLString)
+        
+        vc.loadViewIfNeeded()
+        window.rootViewController = vc
+    }
+    
+    private func setupWindow(for screen: UIScreen) {
+        
+        let window = UIWindow()
+        
+        let requestURLString = "external.html"
+        addViewController(to: window, requestURLString: requestURLString)
+        
+        window.screen = screen
+        window.makeKeyAndVisible()
+        
+        windowsForScreens[screen] = window
+    }
+    
+    private func tearDownWindow(for screen: UIScreen) {
+        guard let window = windowsForScreens[screen] else { return }
+        window.isHidden = true
+        windowsForScreens[screen] = nil
+    }
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if window == nil {
+            return
+        }
+        
+        print("WILL CONNCT", window)
+        
+        let requestURLString = "main.html"
+        addViewController(to: window!, requestURLString: requestURLString)
+        
+        // We need to set up the other screens that are already connected
+        
+        let otherScreens = UIScreen.screens.filter { $0 != UIScreen.main }
+        
+        otherScreens.forEach { (screen) in
+            setupWindow(for: screen)
+        }
+        
+        // Listen for the screen connection notification
+        // then set up the new window and attach it to the screen
+        
+        NotificationCenter.default
+            .addObserver(forName: UIScreen.didConnectNotification,
+                         object: nil,
+                         queue: .main) { (notification) in
+                            
+                            // UIKit is nice enough to hand us the screen object
+                            // that represents the newly connected display
+                            let newScreen = notification.object as! UIScreen
+                            self.setupWindow(for: newScreen)
+        }
+        
+        // Listen for the screen disconnection notification.
+        
+        NotificationCenter.default.addObserver(forName: UIScreen.didDisconnectNotification,
+                                               object: nil,
+                                               queue: .main) { (notification) in
+                                                
+                                                let newScreen = notification.object as! UIScreen
+                                                self.tearDownWindow(for: newScreen)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
