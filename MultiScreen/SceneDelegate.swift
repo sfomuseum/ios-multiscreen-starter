@@ -13,11 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var windowsForScreens = [UIScreen: UIWindow]()
     
-    private func addViewController(to window: UIWindow, requestURLString: String) {
+    private func addViewController(to window: UIWindow, url: String) {
         
+        print("ADD VIEW CONTROLLER ", url)
         // self.logger.info("add view controller \(requestURLString)")
         
-        let vc = ViewController.makeFromStoryboard(requestURLString: requestURLString)
+        let vc = ViewController.makeFromStoryboard(requestURLString: url)
         
         vc.loadViewIfNeeded()
         window.rootViewController = vc
@@ -28,8 +29,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow()
         
         let requestURLString = "external.html"
-        addViewController(to: window, requestURLString: requestURLString)
+        addViewController(to: window, url: requestURLString)
         
+        /*
+         2020-11-10 14:43:34.803439-0500 MultiScreen[19672:530124] [Assert] Error in UIKit client: -[UIWindow setScreen:] should not be called if the client adopts UIScene lifecycle. Call -[UIWindow setWindowScene:] instead.
+         */
+        
+        
+            
         window.screen = screen
         window.makeKeyAndVisible()
         
@@ -52,10 +59,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        print("WILL CONNCT", window)
+        print("WILL CONNECT")
         
         let requestURLString = "main.html"
-        addViewController(to: window!, requestURLString: requestURLString)
+        addViewController(to: window!, url: requestURLString)
         
         // We need to set up the other screens that are already connected
         
@@ -100,22 +107,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+        
+        print("ACTIVE")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        
+        print("RESIGN")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        
+        print("FOREGROUND")
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        
+        print("BACKGROUND")
     }
 
 
