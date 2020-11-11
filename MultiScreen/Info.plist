@@ -32,7 +32,7 @@
 					<key>UISceneClassName</key>
 					<string></string>
 					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<string>$(PRODUCT_MODULE_NAME).ExternalSceneDelegate</string>
 					<key>UISceneConfigurationName</key>
 					<string>Default</string>
 					<key>UISceneStoryboardFile</key>

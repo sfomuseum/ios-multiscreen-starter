@@ -1,13 +1,6 @@
-//
-//  SceneDelegate.swift
-//  MultiScreen
-//
-//  Created by asc on 11/6/20.
-//
-
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class ExternalSceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
@@ -59,14 +52,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        print("WILL CONNECT WITH SCENE", scene)
+        print("WILL CONNECT EXTERNAL")
         
-        let requestURLString = "main.html"
+        let requestURLString = "external.html"
         addViewController(to: window!, url: requestURLString)
         
         // We need to set up the other screens that are already connected
-        
-        print("SCREENS", UIScreen.screens)
         
         let otherScreens = UIScreen.screens.filter { $0 != UIScreen.main }
         
