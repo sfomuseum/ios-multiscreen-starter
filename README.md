@@ -10,6 +10,14 @@ This is meant to be a working _reference implementation_ for other applications.
 
 You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
 
+## What does it do?
+
+![](docs/images/example.png)
+
+Very very little. The application's main screen has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
+
+This is just enough to demonstrate how to load different content on different displays and to communicate between the two.
+
 ## How does it work and what are the moving pieces?
 
 ![](docs/images/xcode.png)
@@ -33,10 +41,6 @@ This is where the web application lives.
 ### ExternalSceneDelegate
 
 ### ViewController
-
-## What does it do?
-
-![](docs/images/example.png)
 
 ## See also
 
