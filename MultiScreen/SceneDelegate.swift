@@ -10,44 +10,9 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private let url = "main.html" // Read from Info.plist?
 
-    var windowsForScreens = [UIScreen: UIWindow]()
-    
-    private func addViewController(to window: UIWindow, url: String) {
-        
-        print("ADD VIEW CONTROLLER ", url)
-        // self.logger.info("add view controller \(requestURLString)")
-        
-        let vc = ViewController.makeFromStoryboard(requestURLString: url)
-        
-        vc.loadViewIfNeeded()
-        window.rootViewController = vc
-    }
-    
-    private func setupWindow(for screen: UIScreen) {
-        
-        let window = UIWindow()
-        
-        let requestURLString = "external.html"
-        addViewController(to: window, url: requestURLString)
-        
-        /*
-         2020-11-10 14:43:34.803439-0500 MultiScreen[19672:530124] [Assert] Error in UIKit client: -[UIWindow setScreen:] should not be called if the client adopts UIScene lifecycle. Call -[UIWindow setWindowScene:] instead.
-         */
-        
-        
-            
-        window.screen = screen
-        window.makeKeyAndVisible()
-        
-        windowsForScreens[screen] = window
-    }
-    
-    private func tearDownWindow(for screen: UIScreen) {
-        guard let window = windowsForScreens[screen] else { return }
-        window.isHidden = true
-        windowsForScreens[screen] = nil
-    }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -59,44 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        print("WILL CONNECT WITH SCENE", scene)
+        let vc = ViewController.makeFromStoryboard(requestURLString: url)
+        vc.loadViewIfNeeded()
         
-        let requestURLString = "main.html"
-        addViewController(to: window!, url: requestURLString)
-        
-        // We need to set up the other screens that are already connected
-        
-        print("SCREENS", UIScreen.screens)
-        
-        let otherScreens = UIScreen.screens.filter { $0 != UIScreen.main }
-        
-        otherScreens.forEach { (screen) in
-            setupWindow(for: screen)
-        }
-        
-        // Listen for the screen connection notification
-        // then set up the new window and attach it to the screen
-        
-        NotificationCenter.default
-            .addObserver(forName: UIScreen.didConnectNotification,
-                         object: nil,
-                         queue: .main) { (notification) in
-                            
-                            // UIKit is nice enough to hand us the screen object
-                            // that represents the newly connected display
-                            let newScreen = notification.object as! UIScreen
-                            self.setupWindow(for: newScreen)
-        }
-        
-        // Listen for the screen disconnection notification.
-        
-        NotificationCenter.default.addObserver(forName: UIScreen.didDisconnectNotification,
-                                               object: nil,
-                                               queue: .main) { (notification) in
-                                                
-                                                let newScreen = notification.object as! UIScreen
-                                                self.tearDownWindow(for: newScreen)
-        }
+        window!.rootViewController = vc
+        return
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -110,21 +42,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         
-        print("ACTIVE")
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
         
-        print("RESIGN")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         
-        print("FOREGROUND")
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
@@ -132,7 +61,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
         
-        print("BACKGROUND")
     }
 
 
