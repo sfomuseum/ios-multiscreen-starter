@@ -7,11 +7,14 @@
 
 import UIKit
 import WebKit
+import Logging
 
 class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
     @IBOutlet var webView: WKWebView!
-    
+
+    let app = UIApplication.shared.delegate as! AppDelegate
+
     var url: String!
     
     var jsCompletionHandler: (Any?, Error?) -> Void = {
@@ -19,7 +22,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         (data, error) in
         
         if let error = error {
-            print(error)
+            // why can't I use logger here?
+            print("JavaScript evaluation error: \(error)")
         }
     }
     
@@ -61,7 +65,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         switch script_rsp {
         case .failure(let error):
-            print("SAD", error)
+            print("Failed to concatenate file contents: \(error)")
             return .failure(error)
         case .success(let body):
             
@@ -80,6 +84,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
     
     override func loadView() {
+        
+        app.logger.info("Load view for \(String(describing: self.url))")
         
         switch self.url {
         case "external.html":
@@ -106,16 +112,12 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     func viewLoadMain(){
         
         let contentController = WKUserContentController();
-        
-        print("ADD consoleLog")
-        
+                
         contentController.add(
             self,
             name: "consoleLog"
         )
-        
-        print("ADD sendMessage")
-        
+                
         contentController.add(
             self,
             name: "sendMessage"
@@ -125,7 +127,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         webConfiguration.userContentController = contentController
         
         if self.url == nil {
-            print("Missing self.url")
+            app.logger.error("Missing self.url")
             return
         }
         
@@ -133,7 +135,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
         guard let url = URL(string: path) else {
-            print("Failed to convert path to URL ", path)
+            app.logger.error("Failed to convert path to URL \(path)")
             return
         }
         
@@ -147,8 +149,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
     
     func webViewDidFinishMain() {
-        let initJS = "initializeMain('()')"
-        self.webView.evaluateJavaScript(initJS, completionHandler: self.jsCompletionHandler)
+        // no-op
     }
     
     func viewLoadExternal(){
@@ -167,7 +168,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
         guard let url = URL(string: path) else {
-            print("Failed to convert path to URL ", path)
+            app.logger.error("Failed to convert path to URL \(path)")
             return
         }
 
@@ -178,29 +179,34 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         view = webView
         
         webView.load(request)
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "sendMessage"),
+                               object: nil,
+                               queue: .main) { (notification) in
+                            
+                            let msg = notification.object as! String
+            
+                            self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
+        }
     }
     
     func webViewDidFinishExternal() {
-        let initJS = "initializeExternal()"
-        self.webView.evaluateJavaScript(initJS, completionHandler: self.jsCompletionHandler)
+        // no-op
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        
-        print("MESSAGE", message.name);
+            
+        app.logger.debug("Received message \(message.name)")
         
         switch message.name {
         case "consoleLog":
-            print(message.name, message.body)
+            app.logger.info("Received message \(message.name): \(message.body)")
         case "sendMessage":
-            print("SEND MESSAGE", message.body);
-            // self.webView.evaluateJavaScript(initJS, completionHandler: self.jsCompletionHandler)
+            NotificationCenter.default.post(name: Notification.Name("sendMessage"), object: message.body)
         default:
-            print("SAD")
-            ()
+            app.logger.debug("Unhandled message \(message.name)")
         }
     }
 
 
 }
-

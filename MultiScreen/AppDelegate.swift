@@ -5,15 +5,14 @@ import Logging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-        
+         
     var logger = Logger(label: "org.sfomuseum.multiscreen")
- 
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
-        self.logger.logLevel = .warning
-    
+
+        logger.logLevel = .debug
         return true
     }
 }

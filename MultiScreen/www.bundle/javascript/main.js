@@ -1,6 +1,7 @@
 function initializeMain(){
+    
     var dt = new Date();
-    logMessage("INITIALIZE MAIN " + dt.toString());
+    logMessage("Initialize main at " + dt.toString());
     
     var messageCount = 0;
 
@@ -21,6 +22,4 @@ function initializeMain(){
             logMessage("Failled to send message " + err);
         }
     };
-
-    logMessage("Whirrrr");
 }

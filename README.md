@@ -34,6 +34,10 @@ This is where the web application lives.
 
 ### ViewController
 
+## What does it do?
+
+![](docs/images/example.png)
+
 ## See also
 
 ### WKWebView

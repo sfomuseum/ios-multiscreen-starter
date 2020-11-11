@@ -1,6 +1,7 @@
 function initializeExternal(){
+    
     var dt = new Date();
-    logMessage("INITIALIZE EXTERNAL " + dt.toString());
+    logMessage("Initialize external at " + dt.toString());
 }
 
 function receiveMessage(msg){
