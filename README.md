@@ -8,9 +8,31 @@ Starter kit for developing hybrid iOS / web applications designed to run on a "c
 
 This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed.
 
+You don't need to be an XCode (or even iOS) expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
+
 ## How does it work and what are the moving pieces?
 
+![](docs/images/xcode.png)
+
 _To be written._
+
+### www.bundle
+
+This is where the web application lives.
+
+#### main.html
+
+#### external.html
+
+#### javascript/*.js
+
+#### css/*.css
+
+### SceneDelegate
+
+### ExternalSceneDelegate
+
+### ViewController
 
 ## See also
 
