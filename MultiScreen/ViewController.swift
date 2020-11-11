@@ -32,12 +32,36 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         return vc
     }
     
+    // This no longer seems to be necessary - as in HTML pages loaded
+    // by a WKWebView instance seem to be able to load adjacent JavaScript
+    // files defined in <script> tags. I am leaving this here for historical
+    // purposes and "just in case". (20201111/thisisaaronland)
+    
     static func buildUserScript(_ paths:Array<String>)->Result<WKUserScript, Error>{
         
+        /*
+         
+        let scripts = [
+            "javascript/common.js",
+            "javascript/external.js"
+        ]
+        
+        let script_rsp = ViewController.buildUserScript(scripts)
+        
+        switch script_rsp {
+        case .failure(let error):
+            print(error)
+        case .success(let script):
+            contentController.addUserScript(script)
+        }
+        
+        */
+                
         let script_rsp = FileUtils.ConcatenateFileContents(paths)
         
         switch script_rsp {
         case .failure(let error):
+            print("SAD", error)
             return .failure(error)
         case .success(let body):
             
@@ -69,9 +93,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         super.viewDidLoad()
     }
     
-    
-    // https://iosdevcenters.blogspot.com/2016/05/creating-simple-browser-with-wkwebview.html
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
         switch self.url {
@@ -85,20 +106,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     func viewLoadMain(){
         
         let contentController = WKUserContentController();
-        
-        let scripts = [
-            "javascript/common.js",
-            "javascript/main.js",
-        ]
-        
-        let script_rsp = ViewController.buildUserScript(scripts)
-        
-        switch script_rsp {
-        case .failure(let error):
-            print(error)
-        case .success(let script):
-            contentController.addUserScript(script)
-        }
         
         contentController.add(
             self,
@@ -138,20 +145,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     func viewLoadExternal(){
         
         let contentController = WKUserContentController();
-        
-        let scripts = [
-            "javascript/common.js",
-            "javascript/external.js"
-        ]
-        
-        let script_rsp = ViewController.buildUserScript(scripts)
-        
-        switch script_rsp {
-        case .failure(let error):
-            print(error)
-        case .success(let script):
-            contentController.addUserScript(script)
-        }
         
         contentController.add(
             self,

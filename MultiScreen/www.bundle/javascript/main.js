@@ -1,3 +1,4 @@
 function initializeMain(){
-    logMessage("INITIALIZE MAIN");
+    var dt = new Date();
+    logMessage("INITIALIZE MAIN " + dt.toString());
 }

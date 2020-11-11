@@ -1,3 +1,4 @@
 function initializeExternal(){
-    logMessage("INITIALIZE EXTERNAL");
+    var dt = new Date();
+    logMessage("INITIALIZE EXTERNAL " + dt.toString());
 }
