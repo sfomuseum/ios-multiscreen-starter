@@ -7,7 +7,6 @@
 
 import UIKit
 import WebKit
-import Logging
 
 class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
