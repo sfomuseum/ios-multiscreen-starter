@@ -6,7 +6,11 @@ Starter kit for developing hybrid iOS / web applications designed to run on a "c
 
 ## Important
 
-This is work in progress.
+This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed.
+
+## How does it work and what are the moving pieces?
+
+_To be written._
 
 ## See also
 
