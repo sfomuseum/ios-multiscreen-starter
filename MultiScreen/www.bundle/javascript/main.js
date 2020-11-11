@@ -7,7 +7,6 @@ function initializeMain(){
     var button = document.getElementById("send-button");
     
     if (! button){
-        
         logMessage("Unable to find #send-button element.");
         return;
     }

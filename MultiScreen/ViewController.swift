@@ -107,10 +107,14 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         let contentController = WKUserContentController();
         
+        print("ADD consoleLog")
+        
         contentController.add(
             self,
             name: "consoleLog"
         )
+        
+        print("ADD sendMessage")
         
         contentController.add(
             self,
