@@ -2,6 +2,12 @@
 
 ![](docs/images/arch.jpg)
 
+Starter kit for developing hybrid iOS / web applications designed to run on a "controller" iOS device and mirrored to a passive external display.
+
+## Important
+
+This is work in progress.
+
 ## See also
 
 ### WKWebView
