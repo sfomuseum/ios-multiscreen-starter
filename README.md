@@ -16,7 +16,7 @@ You don't need to be an XCode or a Swift expert but there is some expectation th
 
 Very very little. The application's main screen has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
 
-This is just enough to demonstrate how to load different content on different displays and to communicate between the two.
+This is just enough to demonstrate how to load different content on different displays and to communicate between the two and between the iOS and web application layers.
 
 ## How does it work and what are the moving pieces?
 
