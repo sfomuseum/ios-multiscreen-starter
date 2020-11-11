@@ -8,7 +8,7 @@ Starter kit for developing hybrid iOS / web applications designed to run on a "c
 
 This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed.
 
-You don't need to be an XCode (or even iOS) expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
+You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
 
 ## How does it work and what are the moving pieces?
 

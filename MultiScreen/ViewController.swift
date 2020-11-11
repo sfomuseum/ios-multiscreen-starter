@@ -112,6 +112,11 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             name: "consoleLog"
         )
         
+        contentController.add(
+            self,
+            name: "sendMessage"
+        )
+        
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         
@@ -178,8 +183,17 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         
-        if (message.name == "consoleLog"){
+        print("MESSAGE", message.name);
+        
+        switch message.name {
+        case "consoleLog":
             print(message.name, message.body)
+        case "sendMessage":
+            print("SEND MESSAGE", message.body);
+            // self.webView.evaluateJavaScript(initJS, completionHandler: self.jsCompletionHandler)
+        default:
+            print("SAD")
+            ()
         }
     }
 
