@@ -6,41 +6,19 @@ Starter kit for developing hybrid iOS / web applications designed to run on a "c
 
 ## Important
 
-This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed.
-
-You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
+This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed. You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
 
 ## What does it do?
 
 ![](docs/images/example.png)
 
-Very very little. The application's main screen has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
+Very little. The application's main screen has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
 
 This is just enough to demonstrate how to load different content on different displays and to communicate between the two and between the iOS and web application layers.
 
 ## How does it work and what are the moving pieces?
 
-![](docs/images/xcode.png)
-
-_To be written._
-
-### www.bundle
-
-This is where the web application lives.
-
-#### main.html
-
-#### external.html
-
-#### javascript/*.js
-
-#### css/*.css
-
-### SceneDelegate
-
-### ExternalSceneDelegate
-
-### ViewController
+![](docs/images/messaging.jpg)
 
 ## See also
 
