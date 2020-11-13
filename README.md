@@ -22,17 +22,25 @@ This is just enough to demonstrate how to load different content on different di
 
 Keeping in mind that the diagram above is a _simplified_ overview of how things work:
 
-* There is a single storyboard that contains a single `WKWebKitView` element that fills all the available screen space.
+* There is a single storyboard that contains a `WKWebKitView` element that fills all the available screen space.
 
 * As of iOS 13 each display is handled by its own scene delegate. The built-in iPad display is handled by the default `SceneDelegate.swift` file and loads `www.bundle/main.html` in the web view. The external display is handled by the `ExternalSceneDelegate.swift` file which loads `www.bundle/external.html`.
 
-* The `ViewController.swift` file contains separate code branches for each display. When either is loaded one or more JavaScript functions are registered with the webview using the `WKUserContentController.add()` method.
+* The `ViewController.swift` file contains separate code branches for each display. When either is loaded one or more JavaScript functions are registered with the webview using the `WKUserContentController.add` method.
 
-* When invoked (using the `` method in the `www.bundle/*.js` files) these functions are dispatched to the `userContentController()` function as `WKScriptMessage` instances.
+* When invoked (using the `webkit.messageHandlers.{METHODNAME}.postMessage` method in the `www.bundle/*.js` files) these functions are dispatched to the `userContentController` function as `WKScriptMessage` instances.
 
 * If the `WKScriptMessage` has the name "sendMessage" its message body is posted to the iOS `NotificationCenter` with the name "sendMessage".
 
-* The `viewLoadExternal()` method registers a `NotificationCenter` observer for notifications named "sendMessage" and, went received, forward them on to the web view using the `evaluateJavaScript("receiveMessage('\(msg)')"` method.
+* The `viewLoadExternal` method registers a `NotificationCenter` observer for notifications named "sendMessage" and, went received, forward them on to the web view using the `evaluateJavaScript("receiveMessage('\(msg)')"` method.
+
+Simplified even further:
+
+* Register methods that can be invoked from the JavaScript files in a `WKWebKitView` instance.
+
+* Relay those methods, and their values, as `NotificationCenter` messages inside the `userContentController` method.
+
+* Add observers for those messages in other parts of the code, perform work accordingly and then relay the result back to the `WKWebKitView` instance, in the form of a JavaScript function call and value, using the `evaluateJavaScript` method.
 
 ## See also
 
