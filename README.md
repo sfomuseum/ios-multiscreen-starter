@@ -4,7 +4,7 @@
 
 Starter kit for developing hybrid iOS / web applications designed to run on a "controller" iOS device and mirrored to a passive external display.
 
-We would welcome improvements and contributions.
+We welcome improvements and contributions.
 
 ## Important
 
