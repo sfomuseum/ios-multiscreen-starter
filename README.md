@@ -4,15 +4,17 @@
 
 Starter kit for developing hybrid iOS / web applications designed to run on a "controller" iOS device and mirrored to a passive external display.
 
+We would welcome improvements and contributions.
+
 ## Important
 
-This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed. You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics and can put together a (simple) project and compile it from scratch.
+This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed. You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics of how iOS applications work and can put together a (simple) project and compile it from scratch.
 
 ## What does it do?
 
 ![](docs/images/example.png)
 
-Very little. The application's main screen has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
+Very little. The application's main screen (as in the iOS device the application is running on) has button that, when pressed, causes a message to be printed on an external display connected to the "controller" iOS device.
 
 This is just enough to demonstrate how to load different content on different displays and to communicate between the two and between the iOS and web application layers.
 
