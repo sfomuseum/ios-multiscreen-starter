@@ -16,6 +16,8 @@ Very little. The application's main screen has button that, when pressed, causes
 
 This is just enough to demonstrate how to load different content on different displays and to communicate between the two and between the iOS and web application layers.
 
+For a much more sophisticated example of what's possible have a look at Apple's [Discover WKWebView enhancements](https://developer.apple.com/videos/play/wwdc2020/10188) video from WWDC 2020.
+
 ## How does it work and what are the moving pieces?
 
 ![](docs/images/messaging.jpg)
@@ -47,6 +49,7 @@ Simplified even further:
 ### WKWebView
 
 * https://iosdevcenters.blogspot.com/2016/05/creating-simple-browser-with-wkwebview.html
+* https://developer.apple.com/videos/play/wwdc2020/10188
 
 ### Notifications
 
