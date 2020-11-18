@@ -10,7 +10,7 @@ We welcome [improvements and contributions](https://github.com/sfomuseum/ios-mul
 
 This is meant to be a working _reference implementation_ for other applications. It is not designed to be an abstract container in to which a web application is placed. You don't need to be an XCode or a Swift expert but there is some expectation that you know the basics of how iOS applications work and can put together a (simple) project and compile it from scratch.
 
-For a discussion of motivations behind the project please have a look at the [iOS Multi-screen Starter Kit](https://millsfield.sfomuseum.org/blog/2020/11/18/multiscreen/) blog post.
+For a fuller discussion of motivations behind the project please have a look at the [iOS Multi-screen Starter Kit](https://millsfield.sfomuseum.org/blog/2020/11/18/multiscreen/) blog post.
 
 ## What does it do?
 
