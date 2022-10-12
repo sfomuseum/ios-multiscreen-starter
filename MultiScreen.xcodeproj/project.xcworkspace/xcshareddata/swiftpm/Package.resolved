@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "eventsource",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sfomuseum/EventSource",
+      "state" : {
+        "branch" : "master",
+        "revision" : "3104ff540bc47dec93e1b58f139b3b613b652342"
+      }
+    },
+    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
