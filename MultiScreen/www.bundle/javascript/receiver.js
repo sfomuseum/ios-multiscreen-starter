@@ -2,6 +2,14 @@ function initializeReceiver(root_url){
     
     var messages_el = document.getElementById("messages");
     
+    var debug_el = document.getElementById("messages");
+
+    var debug = function(msg){
+            var item = document.createElement("li");
+            item.appendChild(document.createTextNode(msg));
+            debug_el.appendChild(item);
+    }
+    
     // var root_url = location.protocol + "//" + location.host;
 
     var sender_url = root_url + "/";
@@ -31,6 +39,8 @@ function initializeReceiver(root_url){
 	    return;
 	}
 
+    debug("MESSAGE " + msg.type);
+        
 	if (msg.type == "update"){
 
 	    var dt = new Date();
@@ -76,6 +86,7 @@ function initializeReceiver(root_url){
 	    url_el.setAttribute("href", "#");
 	    
 	} else {
+        debug("Unhandled type:" + msg.type);
 	    console.log("Unhandled message type", msg.type)
 	}
 	
@@ -85,7 +96,9 @@ function initializeReceiver(root_url){
 
     setTimeout(function(){
 
+        debug("GET CODE:" + code_url);
 	var on_load = function(rsp){
+        debug("LOAD CODE");
 	    console.log("WHAT", rsp);
 	};
 	

@@ -78,17 +78,19 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             if self.app.network_available {
                 
                 // FIX: READ FROM info.plist
-                let str_url = "http://localhost:8080/sse"
-                let url = URL(string: str_url)
+                let str_root = "http://localhost:8080"
+                let root_url = URL(string: str_root)
                 
                 if url != nil {
                     
-                    self.app.sse_endpoint = url!
+                    let sse_url = root_url!.appendingPathComponent("/sse/")
+                    
+                    self.app.sse_endpoint = sse_url
                     self.initializeSSE()
                                     
                     if self.is_sse_receiver {
                                
-                        self.webView.evaluateJavaScript("initializeReceiver('\(str_url)')", completionHandler: self.jsCompletionHandler)
+                        self.webView.evaluateJavaScript("initializeReceiver('\(str_root)')", completionHandler: self.jsCompletionHandler)
                     }
                     
                 }
