@@ -48,50 +48,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         vc.url = requestURLString
         return vc
     }
-    
-    // This no longer seems to be necessary - as in HTML pages loaded
-    // by a WKWebView instance seem to be able to load adjacent JavaScript
-    // files defined in <script> tags. I am leaving this here for historical
-    // purposes and "just in case". (20201111/thisisaaronland)
-    
-    static func buildUserScript(_ paths:Array<String>)->Result<WKUserScript, Error>{
-        
-        /*
-         
-        let scripts = [
-            "javascript/common.js",
-            "javascript/external.js"
-        ]
-        
-        let script_rsp = ViewController.buildUserScript(scripts)
-        
-        switch script_rsp {
-        case .failure(let error):
-            print(error)
-        case .success(let script):
-            contentController.addUserScript(script)
-        }
-        
-        */
-                
-        let script_rsp = FileUtils.ConcatenateFileContents(paths)
-        
-        switch script_rsp {
-        case .failure(let error):
-            print("Failed to concatenate file contents: \(error)")
-            return .failure(error)
-        case .success(let body):
-            
-            let script = WKUserScript(
-                source: body,
-                injectionTime: WKUserScriptInjectionTime.atDocumentEnd,
-                forMainFrameOnly: true
-            )
-            
-            return .success(script)
-        }
-    }
-    
+ 
     override var prefersStatusBarHidden: Bool {
         return true
     }
