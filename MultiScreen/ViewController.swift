@@ -114,6 +114,19 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
+        print("WEB VIEW DID FINISH \(app.network_available)")
+        
+        if app.network_available {
+            
+            let url = URL(string: "http://localhost:8080/sse")
+            
+            if url != nil {
+                app.sse_endpoint = url
+                print("URL \(url)")
+                self.initializeSSE()
+            }
+        }
+        
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "networkAvailable"),
                                object: nil,
                                queue: .main) { (notification) in
@@ -325,7 +338,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             guard reconnect ?? false else {
             //if reconnect == true {
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5000)) { [weak self] in                    
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5000)) { [weak self] in
                     self?.initializeSSE()
                 }
                 
