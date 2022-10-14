@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Global variable to signal network availability - this is monitored and updated below
     var network_available = false
 
+    var sse_enable = true   // Read from info.plist
+
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {

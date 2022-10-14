@@ -71,45 +71,41 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
-        print("WEB VIEW DID FINISH \(app.network_available)")
-        
-        if self.app.network_available {
+        if self.app.sse_enable {
             
-            let url = URL(string: "http://localhost:8080/sse")
-            
-            if url != nil {
-                self.app.sse_endpoint = url!
-                print("URL \(url)")
-                self.initializeSSE()
+            if self.app.network_available {
+                
+                // FIX: READ FROM info.plist
+                let url = URL(string: "http://localhost:8080/sse")
+                
+                if url != nil {
+                    self.app.sse_endpoint = url!
+                    self.initializeSSE()
+                }
             }
-        }
-        
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "networkAvailable"),
-                               object: nil,
-                               queue: .main) { (notification) in
             
-            let status = notification.object as! Bool
-            let msg = "Network available: \(status)"
-            
-            self.app.logger.debug("Network available: \(status)")
-            self.jsDebugLog(body: msg)
-            
-            if status == false {
-                self.eventSource?.disconnect()
-                self.sse_connection_attempts = 0
-            } else {
-                self.initializeSSE()
-                // self.triggerShowCodeMessage()
+            NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "networkAvailable"),
+                                                   object: nil,
+                                                   queue: .main) { (notification) in
+                
+                let status = notification.object as! Bool
+                let msg = "Network available: \(status)"
+                
+                self.app.logger.debug("Network available: \(status)")
+                self.jsDebugLog(body: msg)
+                
+                if status == false {
+                    self.eventSource?.disconnect()
+                    self.sse_connection_attempts = 0
+                } else {
+                    self.initializeSSE()
+                    // self.triggerShowCodeMessage()
+                }
             }
-        }
-        
-        switch self.url {
-        case "external.html":
-            self.webViewDidFinishExternal()
-        default:
-            self.webViewDidFinishMain()
         }
     }
+    
+    //MARK: Main
     
     func viewLoadMain(){
         
@@ -133,6 +129,10 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             return
         }
         
+        if app.sse_enable {
+            self.url = "receiver.html"
+        }
+        
         var path = FileUtils.AbsPath(self.url)
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
@@ -150,9 +150,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         webView.load(request)
     }
     
-    func webViewDidFinishMain() {
-        // no-op
-    }
+    //MARK: External
     
     func viewLoadExternal(){
         
@@ -190,11 +188,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             
                             self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
         }
-    }
-
-    
-    func webViewDidFinishExternal() {
-        // no-op
     }
     
     //MARK: SSE
