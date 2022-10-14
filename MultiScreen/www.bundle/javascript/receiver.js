@@ -1,9 +1,4 @@
 function initializeReceiver(root_url){
-
-    var debug = document.createElement("div");
-    debug.innerText = "HELLO " + root_url;
-
-    document.body.prepend(debug);
     
     var messages_el = document.getElementById("messages");
     
