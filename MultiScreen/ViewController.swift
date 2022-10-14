@@ -40,6 +40,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     /// Semaphore to lock/unlock during SSE connections to stem "thundering herds" of connections/retries
     let sse_lock = DispatchSemaphore(value: 1)
     
+    var is_sse_receiver = false
+    
     static func makeFromStoryboard(requestURLString: String) -> ViewController {
         
         let vc = UIStoryboard(name: "Main", bundle: nil)
@@ -70,17 +72,25 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        
+                
         if self.app.sse_enable {
             
             if self.app.network_available {
                 
                 // FIX: READ FROM info.plist
-                let url = URL(string: "http://localhost:8080/sse")
+                let str_url = "http://localhost:8080/sse"
+                let url = URL(string: str_url)
                 
                 if url != nil {
+                    
                     self.app.sse_endpoint = url!
                     self.initializeSSE()
+                                    
+                    if self.is_sse_receiver {
+                               
+                        self.webView.evaluateJavaScript("initializeReceiver('\(str_url)')", completionHandler: self.jsCompletionHandler)
+                    }
+                    
                 }
             }
             
@@ -129,10 +139,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             return
         }
         
-        if app.sse_enable {
-            self.url = "receiver.html"
-        }
-        
         var path = FileUtils.AbsPath(self.url)
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
@@ -163,6 +169,11 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
+        
+        if app.sse_enable {
+            self.url = "receiver.html"
+            self.is_sse_receiver = true
+        }
         
         var path = FileUtils.AbsPath(self.url)
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
