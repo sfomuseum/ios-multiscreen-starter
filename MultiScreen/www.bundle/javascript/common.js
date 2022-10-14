@@ -21,3 +21,7 @@ function sendMessage(msg){
 function isWebkit() {
     return (typeof(webkit) == "undefined") ? false : true;
 }
+
+function setControllerURL(url){
+    document.body.setAttribute("data-controller-url", url);
+}

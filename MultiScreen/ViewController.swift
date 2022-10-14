@@ -74,26 +74,28 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
                 
         if self.app.sse_enable {
-            
-            if self.app.network_available {
                 
+            print("OKAY SSE")
                 // FIX: READ FROM info.plist
                 let str_root = "http://localhost:8080"
                 let root_url = URL(string: str_root)
                 
-                if url != nil {
+            print("URL", root_url)
+            
+                if root_url != nil {
+                    
+                    print("SET", str_root)
+                    
+                    self.webView.evaluateJavaScript("setControllerURL('\(str_root)')", completionHandler: self.jsCompletionHandler)
                     
                     let sse_url = root_url!.appendingPathComponent("/sse/")
-                    
                     self.app.sse_endpoint = sse_url
-                    self.initializeSSE()
-                                    
+                       
                     if self.is_sse_receiver {
-                               
-                        self.webView.evaluateJavaScript("initializeReceiver('\(str_root)')", completionHandler: self.jsCompletionHandler)
+                        self.initializeSSE()
+                        self.webView.evaluateJavaScript("initializeReceiverMain('\(str_root)')", completionHandler: self.jsCompletionHandler)
                     }
-                    
-                }
+
             }
             
             NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "networkAvailable"),
@@ -111,7 +113,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                     self.sse_connection_attempts = 0
                 } else {
                     self.initializeSSE()
-                    // self.triggerShowCodeMessage()
                 }
             }
         }
@@ -136,11 +137,10 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         
-        if self.url == nil {
-            app.logger.error("Missing self.url")
-            return
+        if app.sse_enable {
+            self.url = "receiver_main.html"
+            self.is_sse_receiver = true
         }
-        
         var path = FileUtils.AbsPath(self.url)
         path = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
                 
@@ -173,8 +173,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         webConfiguration.userContentController = contentController
         
         if app.sse_enable {
-            self.url = "receiver.html"
-            self.is_sse_receiver = true
+            self.url = "receiver_external.html"
+            // self.is_sse_receiver = true
         }
         
         var path = FileUtils.AbsPath(self.url)
@@ -198,6 +198,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                                queue: .main) { (notification) in
                             
                             let msg = notification.object as! String
+            
+            self.app.logger.debug("Relay message: \(self.url) \(msg)")
             
                             self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
         }
@@ -257,7 +259,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         eventSource?.onOpen { [weak self] in
             let state = self?.eventSource?.readyState
-            print("CONNTECT \(state)")
             self?.jsDebugLog(body: "SSE (native) connected with state \(String(describing: state))")
             self?.app.logger.info("SSE open")
             self?.sse_connection_attempts = 0
@@ -344,7 +345,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             
             do {
                 message = try decoder.decode(SSEMessage.self, from: data)
-                self?.handleSSEMessage(message: message)
+                self?.handleSSEMessage(message: message, raw: data)
             } catch(let err) {
                 self?.app.logger.error("Problem decoding SSE message: \(err)")
                 self?.app.logger.error("Message was \(String(describing: raw))")
@@ -361,7 +362,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
     
     /// Process individual SSE messages
-    private func handleSSEMessage(message: SSEMessage) {
+    private func handleSSEMessage(message: SSEMessage, raw: Data) {
         
         self.last_sse_message = Int64(Date().timeIntervalSince1970)
         
@@ -369,11 +370,18 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         // self.app.logger.info("[checkin] SSE message:  \(message.type)")
         // self.app.logger.info("SSE BODY \(message.data)")
-        
+                
         switch (message.type) {
+        case "showCode", "hideCode", "update":
+            ()
         default:
             self.app.logger.warning("Unhandled SSE message type \(message.type)")
+            return
         }
+        
+        let body = String(decoding: raw, as: UTF8.self)
+        NotificationCenter.default.post(name: Notification.Name("sendMessage"), object: body)
+
     }
     
     //MARK: JavaScript
@@ -382,7 +390,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     /// depends on <div id="debug-container"><div id="debug"></div></div>
     /// being uncommented (20200210/thisisaaronland)
     private func jsDebugLog(body: String) {
-        self.jsDispatchAsync(jsFunc: "debugMessage('\(body)')")
+        print("DEBUG \(body)")
+        // self.jsDispatchAsync(jsFunc: "debugMessage('\(body)')")
     }
     
     /// Invoke the webView's evaluateJavaScript() method with the application's default completionHandler
@@ -397,6 +406,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             self.jsDispatch(jsFunc: jsFunc)
         }
     }
+    
+    //MARK: JavaScript - iOS bridge
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             
