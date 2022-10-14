@@ -116,12 +116,12 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         print("WEB VIEW DID FINISH \(app.network_available)")
         
-        if app.network_available {
+        if self.app.network_available {
             
             let url = URL(string: "http://localhost:8080/sse")
             
             if url != nil {
-                app.sse_endpoint = url
+                self.app.sse_endpoint = url!
                 print("URL \(url)")
                 self.initializeSSE()
             }
@@ -244,7 +244,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
     /// Create SSE instance and register callbacks
     private func initializeSSE() {
-        
+                
         if self.app.sse_endpoint == nil {
             jsDebugLog(body: "Failed to intialize SSE, endpoint undefined.")
             return
@@ -294,6 +294,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         eventSource?.onOpen { [weak self] in
             let state = self?.eventSource?.readyState
+            print("CONNTECT \(state)")
             self?.jsDebugLog(body: "SSE (native) connected with state \(String(describing: state))")
             self?.app.logger.info("SSE open")
             self?.sse_connection_attempts = 0
