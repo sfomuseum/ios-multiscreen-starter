@@ -37,19 +37,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     /// A  unix timestamp representing the time of the last SSE event from the relay server
     var last_sse_message = Int64(0)
 
-    var checkin_timer: Timer?
-    
-    /// Number of seconds between checkins
-    var checkin_interval = TimeInterval(30)
-    
-    var last_checkin_time = Int64(0)
-    var last_checkin_attempted = Int64(0)
-    
-    var last_checkin_status = false
-    
-    /// The maximum number of seconds that it's okay to have not heard from the relay server
-    var last_checkin_allowable_delay = 90
-
     /// Semaphore to lock/unlock during SSE connections to stem "thundering herds" of connections/retries
     let sse_lock = DispatchSemaphore(value: 1)
     
@@ -126,6 +113,25 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "networkAvailable"),
+                               object: nil,
+                               queue: .main) { (notification) in
+            
+            let status = notification.object as! Bool
+            let msg = "Network available: \(status)"
+            
+            self.app.logger.debug("Network available: \(status)")
+            self.jsDebugLog(body: msg)
+            
+            if status == false {
+                self.eventSource?.disconnect()
+                self.sse_connection_attempts = 0
+            } else {
+                self.initializeSSE()
+                // self.triggerShowCodeMessage()
+            }
+        }
         
         switch self.url {
         case "external.html":
@@ -215,79 +221,14 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                             self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
         }
     }
+
     
     func webViewDidFinishExternal() {
         // no-op
     }
     
     //MARK: SSE
-    
-    /// A thin wrapper around the initializeSSE method to ensure that the application can make a successful
-    /// "checkin" request with the relay server. It can optionally be configured to retry the connection (and checkin)
-    /// until successful.
-    private func initializeSSEWithCheckin(retry: Bool, max_tries: Int) {
         
-        jsDebugLog(body: "Initialize SSE with checkin, retry: \(retry) max tries: \(max_tries)")
-        
-        var req = URLRequest(url: self.app.checkin_endpoint!)
-        req.httpMethod = "POST"
-        req.timeoutInterval = TimeInterval(10) // Default is 60 seconds, we run every 30 seconds...
-        
-        let task = URLSession.shared.dataTask(with: req) { [self] data, response, error in
-            
-            self.last_checkin_attempted = Int64(Date().timeIntervalSince1970)
-            
-            guard let rsp = response as? HTTPURLResponse else {
-                self.last_checkin_status = false
-                self.initializeSSEWithCheckinOnError(retry: retry, max_tries: max_tries)
-                return
-            }
-            
-            if error != nil {
-                self.last_checkin_status = false
-                self.initializeSSEWithCheckinOnError(retry: retry, max_tries: max_tries)
-                return
-            }
-            
-            guard (204) ~= rsp.statusCode else {
-                self.last_checkin_status = false
-                self.initializeSSEWithCheckinOnError(retry: retry, max_tries: max_tries)
-                return
-            }
-            
-            self.last_checkin_time = Int64(Date().timeIntervalSince1970)
-            self.last_checkin_status = true
-            
-            self.initializeSSE()
-        }
-        
-        task.resume()
-    }
-    
-    /// Private method to wrap how (whether) to handle unsuccessful checkin responses from the
-    /// initializeSSEWithCheckIn method
-    private func initializeSSEWithCheckinOnError(retry: Bool, max_tries: Int) {
-        
-        if !retry{
-            return
-        }
-        
-        var _max_tries = max_tries
-        
-        if _max_tries > 0 {
-            
-            _max_tries = _max_tries - 1
-            
-            if _max_tries == 0 {
-                return
-            }
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5000)) { [weak self] in
-            self?.initializeSSEWithCheckin(retry: retry, max_tries: _max_tries)
-        }
-    }
-    
     /// Create SSE instance and register callbacks
     private func initializeSSE() {
         
@@ -384,10 +325,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
             guard reconnect ?? false else {
             //if reconnect == true {
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5000)) { [weak self] in
-                    self?.jsDebugLog(body: "SSE do reconnect (w/ retries)")
-                    
-                    self?.initializeSSEWithCheckin(retry: false, max_tries: -1)
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5000)) { [weak self] in                    
+                    self?.initializeSSE()
                 }
                 
                 return
@@ -442,115 +381,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         jsDebugLog(body: "Connect to SSE endpoint")
         eventSource?.connect()
-        
-        // Start a timer to ensure that we've received a (any) message from the relay-server
-        // recently. We do this to prevent scenarios where the iPad application will show a
-        // a QR code that will result in an error (because the relay server isn't responding)
-        
-        if checkin_timer == nil {
-            
-            jsDebugLog(body: "Create checkin timer")
-            self.checkin_timer = Timer.scheduledTimer(timeInterval: self.checkin_interval, target: self, selector: #selector(checkInWithRelayServer), userInfo: nil, repeats: true)
-        }
-    }
-    
-    /// Code to check whether the application can "check in" with the relay server.
-    @objc private func checkInWithRelayServer() {
-        
-        if !self.app.network_available {
-            self.app.logger.debug("Unable to checkin, network unavailable")
-            return
-        }
-        
-        var req = URLRequest(url: self.app.checkin_endpoint!)
-        req.httpMethod = "POST"
-        req.timeoutInterval = TimeInterval(10) // Default is 60 seconds, we run every 30 seconds...
-        
-        jsDebugLog(body:"Do checkin")
-        
-        let task = URLSession.shared.dataTask(with: req) { [self] data, response, error in
-            
-            self.last_checkin_attempted = Int64(Date().timeIntervalSince1970)
-            
-            guard let rsp = response as? HTTPURLResponse else {
-                self.app.logger.warning("Checkin \(self.app.checkin_endpoint!) failed with null response")
-                
-                jsDebugLog(body: "Bunk checkin response")
-                
-                self.last_checkin_status = false
-                self.handleRelayServerCheckin()
-                
-                return
-            }
-            
-            if error != nil {
-                self.app.logger.error("Checkin \(self.app.checkin_endpoint!) failed with error \(String(describing: error))")
-                
-                jsDebugLog(body: "Checkin error \(String(describing: error))")
-                
-                self.last_checkin_status = false
-                self.handleRelayServerCheckin()
-                return
-            }
-            
-            guard (204) ~= rsp.statusCode else {
-                self.app.logger.error("Status code for checkin \(self.app.checkin_endpoint!) should be 204, but is \(rsp.statusCode)")
-                
-                jsDebugLog(body: "Checkin failed \(rsp.statusCode)")
-                
-                self.last_checkin_status = false
-                self.handleRelayServerCheckin()
-                return
-            }
-            
-            self.last_checkin_time = Int64(Date().timeIntervalSince1970)
-            self.last_checkin_status = true
-            
-            self.app.logger.info("Set last checkin as \(self.last_checkin_time)")
-            jsDebugLog(body: "Set last checkin as \(self.last_checkin_time)")
-            
-            self.handleRelayServerCheckin()
-        }
-        
-        jsDebugLog(body:"Start checkin")
-        task.resume()
-    }
-    
-    private func handleRelayServerCheckin(){
-        
-        jsDebugLog(body: "Handle relay server checkin")
-        
-        if self.last_checkin_attempted == 0 {
-            return
-        }
-        
-        // self.app.logger.info("Ensure SSE message last: \(self.last_sse_message) now: \(now)")
-        
-        var ok = true
-        
-        if self.last_checkin_status == false {
-            jsDebugLog(body: "Hide QR code (no messages from SSE server)")
-            ok = false
-        }
-        
-        if ok {
-            
-            if self.eventSource == nil {
-                jsDebugLog(body: "Reconnect to SSE server")
-                self.initializeSSEWithCheckin(retry: false, max_tries: -1)
-            }
-            
-            jsDebugLog(body: "Last checkin with relay server was \(self.last_checkin_time)")
-            return
-        }
-        
-        jsDebugLog(body: "Disconnect from SSE server")
-        self.eventSource?.disconnect()
-        self.eventSource = nil
-                
-        DispatchQueue.main.async {
-            // 
-        }
     }
     
     /// Process individual SSE messages
