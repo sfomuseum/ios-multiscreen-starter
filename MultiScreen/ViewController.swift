@@ -194,6 +194,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                             
                             let msg = notification.object as! String
                         
+                            self.jsDebugLog(body: "Notification message received \(msg)")
+
                             self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
         }
     }
@@ -360,7 +362,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         self.last_sse_message = Int64(Date().timeIntervalSince1970)
         
         self.app.logger.info("SSE message received \(message.type)")
-        
+                
         // self.app.logger.info("[checkin] SSE message:  \(message.type)")
         // self.app.logger.info("SSE BODY \(message.data)")
                 
@@ -373,6 +375,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         }
         
         let body = String(decoding: raw, as: UTF8.self)
+        self.jsDebugLog(body: "SSE message received \(body)")
+
         NotificationCenter.default.post(name: Notification.Name("sendMessage"), object: body)
 
     }
