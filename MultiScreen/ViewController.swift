@@ -75,17 +75,12 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                 
         if self.app.sse_enable {
                 
-            print("OKAY SSE")
                 // FIX: READ FROM info.plist
                 let str_root = "http://localhost:8080"
                 let root_url = URL(string: str_root)
-                
-            print("URL", root_url)
-            
+                            
                 if root_url != nil {
-                    
-                    print("SET", str_root)
-                    
+                                        
                     self.webView.evaluateJavaScript("setControllerURL('\(str_root)')", completionHandler: self.jsCompletionHandler)
                     
                     let sse_url = root_url!.appendingPathComponent("/sse/")
@@ -93,7 +88,8 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                        
                     if self.is_sse_receiver {
                         self.initializeSSE()
-                        self.webView.evaluateJavaScript("initializeReceiverMain('\(str_root)')", completionHandler: self.jsCompletionHandler)
+                    } else {
+                        self.webView.evaluateJavaScript("initializeReceiverExternal('\(str_root)')", completionHandler: self.jsCompletionHandler)
                     }
 
             }
@@ -174,7 +170,6 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         
         if app.sse_enable {
             self.url = "receiver_external.html"
-            // self.is_sse_receiver = true
         }
         
         var path = FileUtils.AbsPath(self.url)
@@ -198,9 +193,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
                                queue: .main) { (notification) in
                             
                             let msg = notification.object as! String
-            
-            self.app.logger.debug("Relay message: \(self.url) \(msg)")
-            
+                        
                             self.webView.evaluateJavaScript("receiveMessage('\(msg)')", completionHandler: self.jsCompletionHandler)
         }
     }
@@ -390,8 +383,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     /// depends on <div id="debug-container"><div id="debug"></div></div>
     /// being uncommented (20200210/thisisaaronland)
     private func jsDebugLog(body: String) {
-        print("DEBUG \(body)")
-        // self.jsDispatchAsync(jsFunc: "debugMessage('\(body)')")
+        self.jsDispatchAsync(jsFunc: "debugMessage('\(body)')")
     }
     
     /// Invoke the webView's evaluateJavaScript() method with the application's default completionHandler

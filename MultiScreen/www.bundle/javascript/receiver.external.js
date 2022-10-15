@@ -19,6 +19,27 @@ function receiveMessage(raw){
 	console.log("Unhandled message type", msg.type)
     }
 }
+function initializeReceiverExternal(){
+
+    var root_url = document.body.getAttribute("data-controller-url");
+    var code_url = root_url + "/code/";
+    
+    // Fetch the most recent access code to display
+
+    setTimeout(function(){
+
+    var on_load = function(rsp){
+        //
+    };
+    
+    var req = new XMLHttpRequest();
+    
+    req.addEventListener("load", on_load);
+    req.open("GET", code_url, true);
+    req.send();
+    
+    }, 500);
+}
 
 function showMessage(msg){
     
