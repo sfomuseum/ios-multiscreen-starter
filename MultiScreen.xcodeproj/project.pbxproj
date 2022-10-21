@@ -18,6 +18,7 @@
 		4A42D4082555CF2D00067E57 /* MultiScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D4072555CF2D00067E57 /* MultiScreenUITests.swift */; };
 		4A42D41E2555D03600067E57 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D41D2555D03600067E57 /* FileUtils.swift */; };
 		4A42D4352555DAC800067E57 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A42D4342555DAC800067E57 /* Logging */; };
+		4A8867172902D503001CC215 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A8867162902D503001CC215 /* Settings.bundle */; };
 		4AA8160128F77643002C2D25 /* EventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA8160028F77643002C2D25 /* EventSource */; };
 		4AA8160328F77733002C2D25 /* SSE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA8160228F77733002C2D25 /* SSE.swift */; };
 		4AED2826255B218B00823C2A /* www.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4AED2825255B218B00823C2A /* www.bundle */; };
@@ -58,6 +59,7 @@
 		4A42D4092555CF2D00067E57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A42D41D2555D03600067E57 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		4A42D4232555D14F00067E57 /* MultiScreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultiScreen.entitlements; sourceTree = "<group>"; };
+		4A8867162902D503001CC215 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4AA8160228F77733002C2D25 /* SSE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSE.swift; sourceTree = "<group>"; };
 		4AED2825255B218B00823C2A /* www.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = www.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,6 +94,7 @@
 		4A42D3D92555CF2A00067E57 = {
 			isa = PBXGroup;
 			children = (
+				4A8867162902D503001CC215 /* Settings.bundle */,
 				4A42D3E42555CF2A00067E57 /* MultiScreen */,
 				4A42D3FB2555CF2D00067E57 /* MultiScreenTests */,
 				4A42D4062555CF2D00067E57 /* MultiScreenUITests */,
@@ -259,6 +262,7 @@
 			files = (
 				4A42D3F22555CF2D00067E57 /* LaunchScreen.storyboard in Resources */,
 				4A42D3EF2555CF2D00067E57 /* Assets.xcassets in Resources */,
+				4A8867172902D503001CC215 /* Settings.bundle in Resources */,
 				4A42D3ED2555CF2A00067E57 /* Main.storyboard in Resources */,
 				4AED2826255B218B00823C2A /* www.bundle in Resources */,
 			);
