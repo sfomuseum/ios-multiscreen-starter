@@ -16,9 +16,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Enable receiver mode</string>
+			<string>Enable relay mode</string>
 			<key>Key</key>
-			<string></string>
+			<string>EnableRelay</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -26,9 +26,9 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Controller endpoint</string>
+			<string>Relay endpoint</string>
 			<key>Key</key>
-			<string></string>
+			<string>RelayEndpoint</string>
 			<key>DefaultValue</key>
 			<string>http://localhost:8080</string>
 		</dict>
