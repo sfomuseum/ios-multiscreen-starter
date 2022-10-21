@@ -73,7 +73,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
                 
-        if self.app.sse_enable {
+        if self.app.enable_relay {
                 
                 // FIX: READ FROM info.plist
                 let str_root = "http://localhost:8080"
@@ -133,7 +133,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         
-        if app.sse_enable {
+        if app.enable_relay {
             self.url = "receiver_main.html"
             self.is_sse_receiver = true
         }
@@ -168,7 +168,7 @@ class ViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHan
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         
-        if app.sse_enable {
+        if app.enable_relay {
             self.url = "receiver_external.html"
         }
         

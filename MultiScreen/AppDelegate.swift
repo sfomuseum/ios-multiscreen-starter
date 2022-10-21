@@ -9,16 +9,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          
     var logger = Logger(label: "org.sfomuseum.multiscreen")
     
-    /// The URL of the "controller" application defined in ...
+    /// A boolean flag to signal whether or not the application should run using a networked
+    /// relay server. This is read from the applications Settings bundle/preferences panel
+    var enable_relay = false
+
+    /// The root URL of the "controller" realy application
+    /// This is read from the applications Settings bundle/preferences panel
     var relay_endpoint: URL?
     
     /// The URL of the "controller" application's "SSE" endpoint where this application will listen for events to control the map
+    /// This is derived from relay_endpoint
     var sse_endpoint: URL?
     
     /// Global variable to signal network availability - this is monitored and updated below
     var network_available = false
-
-    var sse_enable = true   // Read from info.plist
 
     // I wish something like were just built in to iOS...
     // https://github.com/Abstract45/SettingsExample
@@ -64,18 +68,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let settings = UserDefaults.standard
         settings.synchronize()
         
-        sse_enable = settings.bool(forKey: "EnableRelay")
+        enable_relay = settings.bool(forKey: "EnableRelay")
         let str_relay_endpoint = settings.string(forKey: "RelayEndpoint")
         
         if str_relay_endpoint == nil{
-            () // FIX ME
+            self.logger.error("Application is configured as receiver but relay endpoint is empty.")
+            enable_relay = false
         }
         
         relay_endpoint = URL(string: str_relay_endpoint!)
         
         if relay_endpoint == nil {
-            () // FIX ME
+            self.logger.error("Application is configured as receiver but relay endpoint can not be parsed.")
+            enable_relay = false
         }
+        
         //MARK:  Check network status
         // https://developer.apple.com/documentation/network/nwpathmonitor/2998733-init
         
