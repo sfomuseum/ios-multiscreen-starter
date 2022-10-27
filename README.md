@@ -64,7 +64,9 @@ Importantly, control of the application is limited to one person at a time throu
 
 ![](docs/images/ios-multiscreen-touchfree-001.png)
 
-The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator and an instance of the [sfomuseum/www-multiscreen-starter server](https://github.com/sfomuseum/www-multiscreen-starter#server) running on the same machine.
+The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator and an instance of the [sfomuseum/www-multiscreen-starter server application](https://github.com/sfomuseum/www-multiscreen-starter#server) running on the same machine.
+
+_See the [sfomuseum/www-multiscreen-starter documentation](https://github.com/sfomuseum/www-multiscreen-starter#server) for details on running the server._
 
 First, run the application targeting a 12.9" iPad.
 
@@ -83,8 +85,6 @@ But when you add an external display to the application you'll see both logging 
 Since it's not possible (??) to click those links in the simulator you'll need to go back to the terminal where you've started the `www-multiscreen-starter`	server application and copy the most recent access code that has been generated.
 
 ![](docs/images/ios-multiscreen-touchfree-005.png)
-
-_See the [sfomuseum/www-multiscreen-starter documentation](https://github.com/sfomuseum/www-multiscreen-starter#server) for details on running the server._
 
 Open `http://localhost:8080?code={THE_ACCESS_CODE_YOU_JUST_COPIED}` in a web browser and you'll see a bare-bones form for sending messages.
 
