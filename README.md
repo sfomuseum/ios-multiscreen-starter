@@ -50,9 +50,21 @@ Simplified even further:
 
 ## "Hands free"
 
+The application can also be run in a "touch-free" mode allowing a person to control it (the application) using their mobile device. This is accomplished by replacing the default JavaScript-to-iOS bridge using a network-based equivalent provided by the [sfomuseum/www-multiscreen-starter](https://github.com/sfomuseum/www-multiscreen-starter) package. Here's what that looks like:
+
 ![](docs/images/ios-multiscreen-touchfree-000.jpg)
 
+For background on why this functionality was added see:
+
+* [Presenting the SkyTerrace Interactive Map at NACIS 2022](https://millsfield.sfomuseum.org/blog/2022/10/28/nacis/) (slides and notes from [NACIS 2022](https://nacis.org/annual-meeting/) conference)
+
+* [Interactive Maps of SFO from 1930 to 2021 (and Beyond) at the T2 SkyTerrace](https://www.youtube.com/watch?v=hZ2NXeul0Qs&list=PLcBEhOBZvhcbTn1RC0zWbnuHA81SgIg8b&index=36) (video presented at the [NACIS 2022](https://nacis.org/annual-meeting/) conference)
+
+The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator. First, run the application targeting a 12.9" iPad:
+
 ![](docs/images/ios-multiscreen-touchfree-001.png)
+
+Once the simulator starts the first thing you'll need to do is enable "relay" mode in the application's settings panel:
 
 ![](docs/images/ios-multiscreen-touchfree-002.png)
 
