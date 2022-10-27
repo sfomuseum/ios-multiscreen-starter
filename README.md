@@ -66,7 +66,7 @@ Importantly, control of the application is limited to one person at a time throu
 
 The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator and an instance of the [sfomuseum/www-multiscreen-starter server](https://github.com/sfomuseum/www-multiscreen-starter#server) running on the same machine.
 
-First, run the application targeting a 12.9" iPad:
+First, run the application targeting a 12.9" iPad.
 
 Once the Simulator starts the first thing you'll need to do is enable "relay" mode in the application's settings panel. Note that the default relay endpoint is `http://localhost:8080` which is expected to be the `www-multiscreen-starter` server application running on the same machine.
 
