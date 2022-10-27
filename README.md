@@ -50,13 +50,13 @@ Simplified even further:
 
 ## "Hands free"
 
-The application can also be run in a "touch-free" mode allowing a person to control it (the application) using their mobile device. This is accomplished by replacing the default JavaScript-to-iOS bridge using a network-based equivalent provided by the [sfomuseum/www-multiscreen-starter](https://github.com/sfomuseum/www-multiscreen-starter) package. Here's what that looks like:
+The application can also be run in a "touch-free" mode allowing a person to control it (the application) using their mobile device. This is accomplished by replacing the default JavaScript-to-iOS bridge using a network-based equivalent provided by the [sfomuseum/www-multiscreen-starter](https://github.com/sfomuseum/www-multiscreen-starter) package.
+
+Here's what that looks like:
 
 ![](docs/images/ios-multiscreen-touchfree-000.jpg)
 
-Importantly, control of the application is limited to one person at a time through the use of time-sensitive access codes.
-
-For background on why this functionality was added see:
+Importantly, control of the application is limited to one person at a time through the use of time-sensitive access codes. For background on why this functionality was added see:
 
 * [Presenting the SkyTerrace Interactive Map at NACIS 2022](https://millsfield.sfomuseum.org/blog/2022/10/28/nacis/) (slides and notes from [NACIS 2022](https://nacis.org/annual-meeting/) conference)
 
@@ -72,7 +72,7 @@ Once the Simulator starts the first thing you'll need to do is enable "relay" mo
 
 ![](docs/images/ios-multiscreen-touchfree-002.png)
 
-Returning to the application itself you'll see that the "main" window on the iPad doesn't show (or do) anything besides logging messages.
+Returning to the iOS application you'll see that the "main" window on the iPad doesn't show (or do) anything besides logging messages.
 
 ![](docs/images/ios-multiscreen-touchfree-003.png)
 
