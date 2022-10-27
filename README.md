@@ -80,11 +80,11 @@ But when you add an external display to the application you'll see both logging 
 
 ![](docs/images/ios-multiscreen-touchfree-004.png)
 
-Since it's not possible to click those links in the simulator you'll need to go back to the terminal where you've started the `www-multiscreen-starter`	server application and copy the most recent access code that has been generated.
-
-_See the [sfomuseum/www-multiscreen-starter documentation](https://github.com/sfomuseum/www-multiscreen-starter#server) for details on running the server._
+Since it's not possible (??) to click those links in the simulator you'll need to go back to the terminal where you've started the `www-multiscreen-starter`	server application and copy the most recent access code that has been generated.
 
 ![](docs/images/ios-multiscreen-touchfree-005.png)
+
+_See the [sfomuseum/www-multiscreen-starter documentation](https://github.com/sfomuseum/www-multiscreen-starter#server) for details on running the server._
 
 Open `http://localhost:8080?code={THE_ACCESS_CODE_YOU_JUST_COPIED}` in a web browser and you'll see a bare-bones form for sending messages.
 
@@ -101,6 +101,8 @@ When you return the Simluator you'll see your message being received by both the
 Time passes, new access codes are generated and used. When the original access code is used to send a new message it is denied because newer access codes have started to send their own messages.
 
 ![](docs/images/ios-multiscreen-touchfree-009.png)
+
+Questions and bug reports should be filed as [new issues in this repository](https://github.com/sfomuseum/ios-multiscreen-starter/issues).
 
 ## See also
 
