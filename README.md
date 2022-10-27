@@ -54,6 +54,8 @@ The application can also be run in a "touch-free" mode allowing a person to cont
 
 ![](docs/images/ios-multiscreen-touchfree-000.jpg)
 
+Importantly, control of the application is limited to one person at a time through the use of time-sensitive access codes.
+
 For background on why this functionality was added see:
 
 * [Presenting the SkyTerrace Interactive Map at NACIS 2022](https://millsfield.sfomuseum.org/blog/2022/10/28/nacis/) (slides and notes from [NACIS 2022](https://nacis.org/annual-meeting/) conference)
@@ -62,9 +64,11 @@ For background on why this functionality was added see:
 
 ![](docs/images/ios-multiscreen-touchfree-001.png)
 
-The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator. First, run the application targeting a 12.9" iPad:
+The following examples demonstrate the application run in "touch-free" mode using the XCode Simulator and an instance of the [sfomuseum/www-multiscreen-starter server](https://github.com/sfomuseum/www-multiscreen-starter#server) running on the same machine.
 
-Once the simulator starts the first thing you'll need to do is enable "relay" mode in the application's settings panel. Note that the default relay endpoint is `http://localhost:8080` which is expected to be the `www-multiscreen-starter` server application running on the same machine.
+First, run the application targeting a 12.9" iPad:
+
+Once the Simulator starts the first thing you'll need to do is enable "relay" mode in the application's settings panel. Note that the default relay endpoint is `http://localhost:8080` which is expected to be the `www-multiscreen-starter` server application running on the same machine.
 
 ![](docs/images/ios-multiscreen-touchfree-002.png)
 
@@ -77,6 +81,8 @@ But when you add an external display to the application you'll see both logging 
 ![](docs/images/ios-multiscreen-touchfree-004.png)
 
 Since it's not possible to click those links in the simulator you'll need to go back to the terminal where you've started the `www-multiscreen-starter`	server application and copy the most recent access code that has been generated.
+
+_See the [sfomuseum/www-multiscreen-starter documentation](https://github.com/sfomuseum/www-multiscreen-starter#server) for details on running the server._
 
 ![](docs/images/ios-multiscreen-touchfree-005.png)
 
