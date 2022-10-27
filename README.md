@@ -48,6 +48,28 @@ Simplified even further:
 
 * Add observers for those messages in other parts of the code, perform work accordingly and then relay the result back to the `WKWebKitView` instance, in the form of a JavaScript function call and value, using the `evaluateJavaScript` method.
 
+## "Hands free"
+
+![](docs/images/ios-multiscreen-touchfree-000.jpg)
+
+![](docs/images/ios-multiscreen-touchfree-001.png)
+
+![](docs/images/ios-multiscreen-touchfree-002.png)
+
+![](docs/images/ios-multiscreen-touchfree-003.png)
+
+![](docs/images/ios-multiscreen-touchfree-004.png)
+
+![](docs/images/ios-multiscreen-touchfree-005.png)
+
+![](docs/images/ios-multiscreen-touchfree-006.png)
+
+![](docs/images/ios-multiscreen-touchfree-007.png)
+
+![](docs/images/ios-multiscreen-touchfree-008.png)
+
+![](docs/images/ios-multiscreen-touchfree-009.png)
+
 ## See also
 
 ### WKWebView
