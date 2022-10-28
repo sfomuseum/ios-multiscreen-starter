@@ -1,3 +1,44 @@
 body {
 	margin:0px;
 }
+
+main {
+        padding-left: 32vw;
+}
+#debug-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index:10000;
+    min-height: 100vh !important;    /* this doesn't seem to work */
+    min-width:30vw !important;
+    max-width:30vw !important;
+    overflow:hidden;
+    word-break: break-all;
+    word-wrap: anywhere;
+    border-right: solid thin;
+}
+
+#debug {
+    height:100vh;
+    overflow-y:scroll;
+    padding:.5rem;
+    background-color:#fff;
+    font-size:small;
+}
+
+#debug li {
+    padding: .5rem;
+    padding-left:.75rem;
+    padding-right:.75rem;
+    border-bottom: 1px solid #666;
+    list-style-type: none;
+}
+
+#debug li:before {
+    content: attr(data-timestamp);
+    display:block;
+    text-align:right;
+    color:#666;
+    margin-bottom:.5rem;
+}

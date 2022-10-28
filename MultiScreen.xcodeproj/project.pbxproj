@@ -18,6 +18,9 @@
 		4A42D4082555CF2D00067E57 /* MultiScreenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D4072555CF2D00067E57 /* MultiScreenUITests.swift */; };
 		4A42D41E2555D03600067E57 /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A42D41D2555D03600067E57 /* FileUtils.swift */; };
 		4A42D4352555DAC800067E57 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A42D4342555DAC800067E57 /* Logging */; };
+		4A8867172902D503001CC215 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A8867162902D503001CC215 /* Settings.bundle */; };
+		4AA8160128F77643002C2D25 /* EventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA8160028F77643002C2D25 /* EventSource */; };
+		4AA8160328F77733002C2D25 /* SSE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA8160228F77733002C2D25 /* SSE.swift */; };
 		4AED2826255B218B00823C2A /* www.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4AED2825255B218B00823C2A /* www.bundle */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +59,8 @@
 		4A42D4092555CF2D00067E57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A42D41D2555D03600067E57 /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		4A42D4232555D14F00067E57 /* MultiScreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultiScreen.entitlements; sourceTree = "<group>"; };
+		4A8867162902D503001CC215 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		4AA8160228F77733002C2D25 /* SSE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSE.swift; sourceTree = "<group>"; };
 		4AED2825255B218B00823C2A /* www.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = www.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA8160128F77643002C2D25 /* EventSource in Frameworks */,
 				4A42D4352555DAC800067E57 /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +94,7 @@
 		4A42D3D92555CF2A00067E57 = {
 			isa = PBXGroup;
 			children = (
+				4A8867162902D503001CC215 /* Settings.bundle */,
 				4A42D3E42555CF2A00067E57 /* MultiScreen */,
 				4A42D3FB2555CF2D00067E57 /* MultiScreenTests */,
 				4A42D4062555CF2D00067E57 /* MultiScreenUITests */,
@@ -114,6 +121,7 @@
 				4A42D3E72555CF2A00067E57 /* SceneDelegate.swift */,
 				4A0A5283255C4530006C5D7D /* ExternalSceneDelegate.swift */,
 				4A42D3E92555CF2A00067E57 /* ViewController.swift */,
+				4AA8160228F77733002C2D25 /* SSE.swift */,
 				4A42D3EB2555CF2A00067E57 /* Main.storyboard */,
 				4A42D3EE2555CF2D00067E57 /* Assets.xcassets */,
 				4A42D3F02555CF2D00067E57 /* LaunchScreen.storyboard */,
@@ -159,6 +167,7 @@
 			name = MultiScreen;
 			packageProductDependencies = (
 				4A42D4342555DAC800067E57 /* Logging */,
+				4AA8160028F77643002C2D25 /* EventSource */,
 			);
 			productName = MultiScreen;
 			productReference = 4A42D3E22555CF2A00067E57 /* MultiScreen.app */;
@@ -233,6 +242,7 @@
 			mainGroup = 4A42D3D92555CF2A00067E57;
 			packageReferences = (
 				4A42D4332555DAC800067E57 /* XCRemoteSwiftPackageReference "swift-log" */,
+				4AA815FF28F77643002C2D25 /* XCRemoteSwiftPackageReference "EventSource" */,
 			);
 			productRefGroup = 4A42D3E32555CF2A00067E57 /* Products */;
 			projectDirPath = "";
@@ -252,6 +262,7 @@
 			files = (
 				4A42D3F22555CF2D00067E57 /* LaunchScreen.storyboard in Resources */,
 				4A42D3EF2555CF2D00067E57 /* Assets.xcassets in Resources */,
+				4A8867172902D503001CC215 /* Settings.bundle in Resources */,
 				4A42D3ED2555CF2A00067E57 /* Main.storyboard in Resources */,
 				4AED2826255B218B00823C2A /* www.bundle in Resources */,
 			);
@@ -281,6 +292,7 @@
 				4A0A5284255C4530006C5D7D /* ExternalSceneDelegate.swift in Sources */,
 				4A42D3EA2555CF2A00067E57 /* ViewController.swift in Sources */,
 				4A42D3E62555CF2A00067E57 /* AppDelegate.swift in Sources */,
+				4AA8160328F77733002C2D25 /* SSE.swift in Sources */,
 				4A42D3E82555CF2A00067E57 /* SceneDelegate.swift in Sources */,
 				4A42D41E2555D03600067E57 /* FileUtils.swift in Sources */,
 			);
@@ -635,6 +647,14 @@
 				minimumVersion = 1.4.4;
 			};
 		};
+		4AA815FF28F77643002C2D25 /* XCRemoteSwiftPackageReference "EventSource" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sfomuseum/EventSource";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -642,6 +662,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4A42D4332555DAC800067E57 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
+		};
+		4AA8160028F77643002C2D25 /* EventSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4AA815FF28F77643002C2D25 /* XCRemoteSwiftPackageReference "EventSource" */;
+			productName = EventSource;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
